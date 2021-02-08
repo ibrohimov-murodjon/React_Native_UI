@@ -1,117 +1,91 @@
 import * as React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import { StyleSheet, View, Text, Image,} from 'react-native';
+import { Card, Input, ListItem, Button, Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
-import {AntDesign} from '@expo/vector-icons;'
+
+const Members = [
+    {   id:1,
+        img: require('./assets/team2.jpg'),
+        name:'John Smilga',
+        about:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque soluta quibusdam animi sapiente pariatur ducimus ullam praesentium perspiciatis, ipsum quae dolorem, dignissimos unde similique beatae! Perferendis eum expedita consequatur enim.',
+    },
+    {   id:2,
+        img: require('./assets/team3.jpg'),
+        name:'Mark Lee',
+        about:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque soluta quibusdam animi sapiente pariatur ducimus ullam praesentium perspiciatis, ipsum quae dolorem, dignissimos unde similique beatae! Perferendis eum expedita consequatur enim.',
+    },
+    {   id:3,
+        img: require('./assets/team4.jpg'),
+        name:'Peter Kiran',
+        about:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque soluta quibusdam animi sapiente pariatur ducimus ullam praesentium perspiciatis, ipsum quae dolorem, dignissimos unde similique beatae! Perferendis eum expedita consequatur enim.',
+    },
+]
 
 export default function App() {
     return (
-        <Container>
-            <StatusBar barStyle = "light-content" />
-            <RecipeBackground source={require('./assets/pizza.jpg')}>
-              <SafeAreaView>
-                  <MenuBar>
-                   <Back>
-                       <AntDesign name="arrowleft" size={24} color="#fff" />
-                       <Text style={{marginLeft: 10}}>Ingredients</Text>
-                    </Back>
-                    <AntDesign name="heart" size={24} color="#fff" />
-                 </MenuBar>
-                 <MainRecipe>
-                  <Text title heavy>Rishton oshi</Text> <Diveder />
-                  <Text bold> 1 kg uchun maxsulotlar</Text>
-                  <Text> 1 kg qo'y go'shti | 1 kg sabzi</Text>
-                 </MainRecipe>
-                 <Button>
-                  <Text bold> LEARN MORE</Text>
-                 </Button>
-              </SafeAreaView>
-            </RecipeBackground>
-            <RecipeContainer>
-                <Text dark heavy large>Maxsulotlar tarkibi</Text>
-                <Text dark heavy small>7 kishi uchun</Text>
-                <Recipes></Recipes>
-            </RecipeContainer>
-        </Container>
+        <View style={styles.container}>
+            <Text style={{color:'black', fontSize:30, letterSpacing:2, marginTop:15}}>ABOUT US</Text>
+            <Diveder /> 
+              {
+                Members.map((u, id) => {
+                  return (
+                    <Card containerStyle={{borderRadius:12, backgroundColor:'#B4C8BB', marginBottom:10}} key={id}>
+                    <View style={styles.user}>
+                      <Image
+                        style={styles.image}
+                        resizeMode="cover"
+                        source={{ uri: u.img }}
+                      /> <br/>
+                       <Text style={styles.name}>{u.name.toUpperCase()}</Text> <br/>
+                      <View style={styles.text}>
+                       <Text style={styles.about}><i>{u.about}</i></Text>
+                      </View>
+                    </View>
+                    </Card>
+                  );
+                })
+              }
+        </View>
         );
-}
+    }
+    
+  const styles = StyleSheet.create({
+    container:{
+        flexDirection:'column',
+        alignItems:'center',
+        flex:1,
+        backgroundColor: '#DBDBDB',
+    },
+    user:{
+     alignItems:'center',
+    },
+    image:{
+        width:140,
+        height:140,
+        borderRadius:100,
+        display:'block',
+        marginLeft:'auto',
+        marginRight:'auto'
+    },
+    name:{
+        fontSize:20,
+        letterSpacing:3,
+    },
+    text:{
+        backgroundColor:'#fff',
+        borderRadius:3
+    },
+    about:{
+        marginTop:10,
+        marginBottom:10,
+        marginRight:25,
+        marginLeft:25
+    }
+});
 
-const Container = styled.View`
- flex:1;
- background-color: #fff;
-`;
-
-const Text = styled.Text`
-  color: ${(props) => (props.dark ? "#000" : "#fff")}
-  font-family:"san-serif";
-  ${({
-      title,
-      large,
-      small
-  }) => {
-      switch (true) {
-          case title:
-              return "font-size: 32px";
-          case large:
-              return "font-size: 20px";
-          case small:
-              return "font-size: 12px";
-      }
-  }}
- ${({
-     bold,
-     heavy}) => {
-         switch (true) {
-             case bold:
-                 return "font-weight: 600";
-             case heavy:
-                 return "font-weight: 700";
-         }
-     }}
-`;
-
-const RecipeBackground = styled.ImageBackground`
- width:100%; 
- `;
-
- const MenuBar = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 16px;
- `;
-
- const Back = styled.View`
-  flex-direction: row;
-  align-items: center;
- `;
-
- const MainRecipe = styled.View`
-  padding: 0 32px;
-  margin: 200px 0 32px 0;
- `;
-
- const Diveder = styled.View`
- border-bottom-color: #fff; 
+const Diveder = styled.View`
+ border-bottom-color: #eeb462; 
  border-bottom-width: 2px;
- width: 150px;
- margin: 8px 0;
- `;
-
- const Button = styled.TouchableOpacity`
-  margin: 0 0 48px 32px;
-  background-color: purple;
-  align-self: flex-start;
-  padding: 6px 18px;
-  border-radius: 100px;
- `;
-
- const RecipeContainer = styled.View`
-  margin-top: -24px;
-  padding: 32px;
- background-color: #fff;
- border-top-left-radius: 24px;
- border-top-right-radius: 24px;
- `;
-
- const Recipes = styled.View`
-  margin-top: 16px;
+ width: 100px;
+ margin: 10px 0;
  `;
